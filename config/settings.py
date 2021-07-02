@@ -39,7 +39,7 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THRID_PARTY_APPS = ["django_countries", "django_seed"]
+THRID_PARTY_APPS = ["django_countries", "django_seed", "send_gmail"]
 
 PROJECT_APPS = [
     "core.apps.CoreConfig",
@@ -138,3 +138,13 @@ AUTH_USER_MODEL = "users.User"
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 
 MEDIA_URL = "/media/"
+
+
+# Email Configuration
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = os.environ.get("GMAIL_USERNAME")
+EMAIL_HOST_PASSWORD = os.environ.get("GMAIL_PASSWORD")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_FROM = os.environ.get("GMAIL_USERNAME")
