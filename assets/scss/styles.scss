@@ -1,23 +1,52 @@
 @tailwind base;
 @tailwind components;
 
-.search-box{
+.search-box {
     transition: box-shadow .2s linear
 }
 
-.nav_link{
+.nav_link {
     @apply ml-8 border-b-2 border-white hover:border-gray-600 h-full flex items-center;
     a {
         @apply px-5 py-10;
     }
 }
 
-.btn{
+.btn {
     @apply w-full font-medium text-center text-lg rounded-sm py-4 mb-2
 }
 
-input{
-    @apply w-full font-medium text-lg rounded-sm py-4 mb-2 border border-gray-400 text-left px-5 focus:outline-none focus:border-gray-600
+input {
+    @apply w-full font-medium text-lg rounded-sm py-4 px-5 border border-gray-400 text-left focus:outline-none focus:border-gray-600
+}
+
+form {
+    .input {
+        @apply w-full mb-2;
+        &.has_error {
+            input {
+                @apply bg-red-200 border-gray-600 focus:border-gray-600
+            }
+        }
+    }
+}
+
+.message {
+    &.error {
+        @apply bg-red-600
+    }
+    &.debug {
+        @apply bg-black
+    }
+    &.info {
+        @apply bg-blue-400
+    }
+    &.success {
+        @apply bg-green-500
+    }
+    &.warning {
+        @apply bg-yellow-400
+    }
 }
 
 @tailwind utilities;
