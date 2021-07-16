@@ -16,8 +16,24 @@
     @apply w-full font-medium text-center text-lg rounded-sm py-4 mb-2
 }
 
-input {
+.btn-link {
+    @apply w-full font-medium text-center text-lg rounded-lg py-4 mb-2 text-white bg-red-500
+}
+
+input,
+textarea,
+select {
     @apply w-full font-medium text-lg rounded-sm py-4 px-5 border border-gray-400 text-left focus:outline-none focus:border-gray-600
+}
+
+textarea {
+    resize: none;
+    height: 100px;
+}
+
+select {
+    height: 50px;
+    padding: 5px;
 }
 
 form {
@@ -31,7 +47,28 @@ form {
     }
 }
 
+@keyframes messageFadeIn {
+    0%{
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    5%{
+        opacity: 1;
+        transform: translateY(20px);
+    }
+    95%{
+        opacity: 1;
+        transform: translateY(20px);
+    }
+    100%{
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
 .message {
+    animation: messageFadeIn 5s ease-in-out forwards;
+
     &.error {
         @apply bg-red-600
     }
