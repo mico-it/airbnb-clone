@@ -1,6 +1,7 @@
 import datetime
+from django.http import Http404
 from django.contrib import messages
-from django.shortcuts import redirect, reverse
+from django.shortcuts import render, redirect, reverse
 from django.views.generic import View
 from rooms import models as room_models
 from . import models
@@ -30,7 +31,37 @@ def create(request, room, year, month, day):
 
 
 class ReservationDetailView(View):
-    def get(self, pk):
+    def get(self, *args, **kwargs):
+        pk = kwargs.get("pk")
         reservation = models.Reservation.objects.get_or_none(pk=pk)
         if not reservation:
-            return redirect(reverse("core:home"))
+            raise Http404()
+
+        if (
+            self.request.user != reservation.guest
+            and self.request.user != reservation.room.host
+        ):
+            raise Http404()
+
+        return render(
+            self.request, "reservations/detail.html", {"reservation": reservation}
+        )
+
+
+def edit_reservation(request, pk, verb):
+    reservation = models.Reservation.objects.get_or_none(pk=pk)
+    if not reservation:
+        raise Http404()
+
+    if request.user != reservation.guest and request.user != reservation.room.host:
+        raise Http404()
+
+    if verb == "confirm":
+        reservation.status = models.Reservation.STATUS_CONFIRMED
+    elif verb == "cancel":
+        reservation.status = models.Reservation.STATUS_CANCELED
+        models.BookedDay.objects.filter(reservation=reservation).delete()
+
+    reservation.save()
+    messages.success(request, "Reservation Updated")
+    return redirect(reverse("reservations:detail", kwargs={"pk": reservation.pk}))
