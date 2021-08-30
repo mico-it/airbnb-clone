@@ -7,11 +7,14 @@ from django.core.mail import send_mail
 from django.shortcuts import reverse
 from django.utils.html import strip_tags
 from django.template.loader import render_to_string
+from core import managers as core_managers
 
 
 class User(AbstractUser):
 
     """Custom User Model"""
+
+    objects = core_managers.CustomModelManager()
 
     GENDER_MALE = "male"
     GENDER_FEMALE = "female"
