@@ -14,7 +14,7 @@ class User(AbstractUser):
 
     """Custom User Model"""
 
-    objects = core_managers.CustomModelManager()
+    objects = core_managers.CustomUserManager()
 
     GENDER_MALE = "male"
     GENDER_FEMALE = "female"
